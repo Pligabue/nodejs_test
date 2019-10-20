@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+$primary-color: #17a2b8;
+$secondary-color: #138496;
+
+.form-container {
+    display: inline-block;
+    min-width: 30%;
+}
+
+.form-title {
+    background-color: $primary-color;
+    color: white;
+    padding: 1rem;
+    margin-bottom: 0;
+    border-radius: 0.25rem 0.25rem 0 0;
+}
+
+.form {
+    display: inline-block;
+    width: 100%;
+    font-family: "Open Sans";
+    text-align: left;
+    background-color: whitesmoke;
+    padding: 2rem;
+    border-radius: 0 0 0.25rem 0.25rem;
+    .form-item {
+        label {
+            color: $primary-color;
+            font-size: 1.25rem;
+            font-weight: bold;
+            display: block;
+        }
+        input {
+            padding: 0 0.25rem;
+            width: 100%;
+            margin-bottom: 2rem;
+            border: 1px $primary-color solid;
+            border-radius: 2px;
+        }
+    }
+    .form-select {
+        display: flex;
+        margin-bottom: 2rem;
+        label {
+            line-height: 1.25rem;
+            color: $primary-color;
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin: 0 1rem 0 0;
+        }
+        select {
+            padding: 0 0.25rem;
+            width: 100%;
+            border: 1px $primary-color solid;
+            border-radius: 2px;
+        }
+    }
+    .form-error {
+        font-weight: bold;
+    }
+    .btn-info {
+        &:hover {
+            color: #fff;
+            background-color: $secondary-color;
+            border-color: $primary-color;
+        }
+        color: #fff;
+        background-color: $primary-color;
+        border-color: $primary-color;
+    }
+}
+
+
+
