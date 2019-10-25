@@ -8,6 +8,12 @@ module.exports = {
         email: 'demo@demo.com',
         createdAt: new Date(),
         updatedAt: new Date()
+      }, {
+        firstName: 'Paul',
+        lastName: 'Weller',
+        email: 'the@jam.com',
+        createdAt: new Date(),
+        updatedAt: new Date()
       }], {});
   },
 

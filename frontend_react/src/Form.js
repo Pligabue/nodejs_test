@@ -95,7 +95,16 @@ export class Form extends Component {
                         </div>
                     )
                     break;
-            
+                
+                case "textarea":
+                    forms.push(
+                        <div key={field.name} className="form-textarea">
+                            <label htmlFor={field.name}>{field.title}</label>
+                            <textarea onChange={this.handleChange} name={field.name} type={field.type} id={field.name} />
+                        </div>
+                    );
+                    break;
+
                 default:
                     forms.push(
                         <div key={field.name} className="form-item">
