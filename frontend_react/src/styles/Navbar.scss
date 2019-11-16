@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+$primary-color: #17a2b8;
+$secondary-color: #138496;
+
+.navbar {
+    background-color: $primary-color;
+    #title, #title:visited, #title:hover {
+        display: block;
+        padding: 0.5rem 1rem;
+        font-size: 2.5rem;
+        color: white;
+        text-decoration: none;
+    }
+}

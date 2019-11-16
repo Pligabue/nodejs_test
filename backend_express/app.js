@@ -7,6 +7,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var controllersRouter = require('./routes/controllers');
 
+const passport = require("./authentication/passport")
+
 var app = express();
 
 app.use(logger('dev'));

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios";
 import Button from "react-bootstrap/Button"
-import B_Form from "react-bootstrap/Form"
 import './styles/Forms.scss'
 
 function checkFields(state, fields) {
@@ -25,6 +24,7 @@ export class Form extends Component {
         this.fields = this.props.fields;
         this.url = this.props.url;
         this.getData = this.props.getData;
+        this.user_id = this.props.user_id;
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
@@ -50,6 +50,9 @@ export class Form extends Component {
             let data = {}
             for (let field of this.fields) {
                 data[field.name] = this.state[field.name]
+            }
+            if (this.user_id) {
+                data.user_id = this.user_id
             }
             axios.post(url, data)
                 .then(response => {
@@ -88,8 +91,8 @@ export class Form extends Component {
                     forms.push(
                         <div key={field.name} className="form-select">
                             <label htmlFor={field.name}>{field.title}</label>
-                            <select onChange={this.handleChange} id={field.name} name={field.name} required defaultValue>
-                                <option disabled value> -- Select an option -- </option>
+                            <select onChange={this.handleChange} id={field.name} name={field.name} defaultValue="default">
+                                <option value="default" disabled>Select an option</option>
                                 {options}
                             </select>      
                         </div>
@@ -100,7 +103,16 @@ export class Form extends Component {
                     forms.push(
                         <div key={field.name} className="form-textarea">
                             <label htmlFor={field.name}>{field.title}</label>
-                            <textarea onChange={this.handleChange} name={field.name} type={field.type} id={field.name} />
+                            <div>
+                                <textarea 
+                                    onChange={this.handleChange} 
+                                    name={field.name} 
+                                    type={field.type} 
+                                    id={field.name} 
+                                    cols={field.cols ? field.cols : 100}
+                                    rows={field.rows ? field.rows : 10}
+                                />
+                            </div>
                         </div>
                     );
                     break;

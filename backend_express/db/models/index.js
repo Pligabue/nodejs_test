@@ -22,12 +22,14 @@ fs
   })
   .forEach(file => {
     const model = sequelize['import'](path.join(__dirname, file));
-    db[model.name] = model;
+    const nameCapitalized = model.name.charAt(0).toUpperCase() + model.name.slice(1)
+    db[nameCapitalized] = model;
   });
 
 Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
+  const nameCapitalized = modelName.charAt(0).toUpperCase() + modelName.slice(1)
+  if (db[nameCapitalized].associate) {
+    db[nameCapitalized].associate(db);
   }
 });
 
