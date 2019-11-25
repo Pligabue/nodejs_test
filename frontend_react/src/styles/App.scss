@@ -1,5 +1,4 @@
-$primary-color: #17a2b8;
-$secondary-color: #138496;
+@import "variables.scss";
 
 .grid-container {
     display: grid;
@@ -11,21 +10,34 @@ $secondary-color: #138496;
 
 .main-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: auto auto;
     gap: 0.5rem;
     .navbar-grid {
-        grid-area: 1 / 1 / 1 / 5;
+        grid-area: 1 / 1 / 1 / 7;
     }
     .menu-grid {
         grid-area: 2 / 1 / 2 / 2;
-        margin-left: 0.5rem;
     }
     .page-grid {
-        grid-area: 2 / 2 / 2 / 4;
+        grid-area: 2 / 2 / 2 / 6;
     }
     .extra-grid {
-        grid-area: 2 / 4 / 2 / 5;
+        grid-area: 2 / 6 / 2 / 7;
     }
 }
 
+.btn-primary {
+    color: #fff !important;
+    background-color: $primary-color !important;
+    border-color: $primary-color !important;
+    &:hover {
+        background-color: $secondary-color !important;
+        border-color: $secondary-color !important;
+    }
+    &:focus {
+        background-color: $secondary-color !important;
+        border-color: $secondary-color !important;
+        box-shadow: none !important;
+    }
+}
