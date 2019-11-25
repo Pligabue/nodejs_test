@@ -5,11 +5,16 @@ export class PostForm extends Component {
 
     constructor(props) {
         super(props);
-        this.getData = this.props.getData
-        this.url = this.props.url
-        this.user_id = this.props.user_id;
+        this.url = "/api/post/new"
+        this.state = {
+            userId: this.props.userId
+        }
     }
-    
+
+    getData = (data) => {
+        console.log(data)
+        window.location.reload()
+    }
 
     render() {
         return (
@@ -21,7 +26,7 @@ export class PostForm extends Component {
                 ]}
                 url={this.url}
                 getData={this.getData}
-                user_id={this.user_id}
+                userId={this.props.userId}
             />
         );
     }

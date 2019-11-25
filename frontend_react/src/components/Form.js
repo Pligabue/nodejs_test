@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from "axios";
 import Button from "react-bootstrap/Button"
-import './styles/Forms.scss'
+import '../styles/Form.scss'
 
 function checkFields(state, fields) {
     try {
@@ -24,7 +24,6 @@ export class Form extends Component {
         this.fields = this.props.fields;
         this.url = this.props.url;
         this.getData = this.props.getData;
-        this.user_id = this.props.user_id;
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
@@ -51,8 +50,8 @@ export class Form extends Component {
             for (let field of this.fields) {
                 data[field.name] = this.state[field.name]
             }
-            if (this.user_id) {
-                data.user_id = this.user_id
+            if (this.props.userId) {
+                data.userId = this.props.userId
             }
             axios.post(url, data)
                 .then(response => {
@@ -61,17 +60,18 @@ export class Form extends Component {
                     })
                     this.getData(response.data)
                 })
-                .catch((error) => {
-                    let { message } = error.response.data;
-                    if (message) {
+                .catch(error => {
+                    console.log(error.response);
+                    if (error.response.data) {
+                        let { message } = error.response.data;
+                        if (message) 
+                            this.setState({
+                                errorMessage: "*" + message
+                            })
+                    } else 
                         this.setState({
-                            errorMessage: "*" + data.message
-                        })
-                    } else {
-                        this.setState({
-                            errorMessage: "*Erro no servidor" 
-                        })
-                    }
+                            errorMessage: "*Serverside error" 
+                    })
                 })
             this.setState({
                 errorMessage: ""
@@ -132,7 +132,7 @@ export class Form extends Component {
             <form onSubmit={this.handleSubmit} className="form">
                 {forms}
                 <p className="form-error">{this.state.errorMessage}</p>
-                <Button type="submit" block variant="info">Submit</Button>
+                <Button type="submit" block>Submit</Button>
             </form>
         </div>);
     }
