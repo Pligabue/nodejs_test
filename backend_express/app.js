@@ -4,10 +4,12 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var controllersRouter = require('./routes/controllers');
+var userController = require('./routes/user-controller');
+var postController = require('./routes/post-controller');
 
-const passport = require("./authentication/passport")
+const session = require("express-session")
+const passport = require("passport")
+require("./authentication/passport-config")
 
 var app = express();
 
@@ -17,8 +19,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({ secret: "secret", resave: false, saveUninitialized: false }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use('/api', indexRouter);
-app.use('/users', usersRouter);
-app.use('/api', controllersRouter);
+app.use('/api', userController);
+app.use('/api', postController);
 
 module.exports = app;
