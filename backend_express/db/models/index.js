@@ -27,9 +27,8 @@ fs
   });
 
 Object.keys(db).forEach(modelName => {
-  const nameCapitalized = modelName.charAt(0).toUpperCase() + modelName.slice(1)
-  if (db[nameCapitalized].associate) {
-    db[nameCapitalized].associate(db);
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
   }
 });
 
