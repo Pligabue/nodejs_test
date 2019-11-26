@@ -5,6 +5,8 @@ const { User, Post } = require("../db/models");
 const bcrypt = require('bcryptjs');
 const passport = require("passport")
 
+const { isAuthorized } = require("./custom-middleware")
+
 router.post("/post/new", async (req, res) => {
     let { userId, title, content } = req.body
     console.log(req.body);
@@ -27,16 +29,12 @@ router.post("/post/new", async (req, res) => {
     }
 })
 
-router.get("/post", async (req, res) => {
-
+router.post("/posts", isAuthorized, async (req, res) => {
+    let { userId } = req.body 
     posts = await Post.findAll({
-        attributes: ["title", "content"],
-        include: [{
-            model: User,
-            attributes: ["firstName", "lastName", "email"]
-        }]
+        attributes: ["id", "title", "content"],
+        where: {userId}
     })
-    
     res.send({posts})
 })
 
