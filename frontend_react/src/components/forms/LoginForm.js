@@ -7,7 +7,7 @@ export class LoginForm extends Component {
         super(props)
         this.url = "/api/login"
     }
-
+    
     getData = (data) => {
         console.log(data)
         window.location.assign("/")

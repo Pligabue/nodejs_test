@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from "axios";
 import Button from "react-bootstrap/Button"
-import '../styles/Form.scss'
+import '../../styles/Form.scss'
 
 function checkFields(state, fields) {
     try {
