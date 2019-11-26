@@ -4,9 +4,11 @@ import { Route } from "react-router-dom"
 import './styles/App.scss';
 import Navbar from './components/Navbar';
 import Menu from './components/Menu';
-import LoginForm from './components/LoginForm';
-import PostForm from './components/PostForm';
+import LoginForm from './components/forms/LoginForm';
+import PostForm from './components/forms/PostForm';
 import Axios from 'axios';
+import RegistrationForm from './components/forms/RegistrationForm';
+import PostList from './components/PostList';
 
 class App extends React.Component {
         
@@ -36,12 +38,10 @@ class App extends React.Component {
                     <Menu userId={this.state.userId} />
                 </div>
                 <div className="page-grid">
-                    <Route path="/login">
-                        <LoginForm />
-                    </Route>
-                    <Route path="/post">
-                        <PostForm userId={this.state.userId} />
-                    </Route>
+                    <Route path="/register"><RegistrationForm /></Route>
+                    <Route path="/login"><LoginForm /></Route>
+                    <Route path="/post"><PostForm userId={this.state.userId} /></Route>
+                    <Route path="/posts"><PostList userId={this.state.userId}/></Route>
                 </div>
                 <div className="extra-grid">
 

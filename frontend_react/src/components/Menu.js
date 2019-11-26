@@ -17,10 +17,12 @@ export class Menu extends Component {
         if (this.props.userId) {
             userLinks = [
                 <Link to="/post" key="new-post">New Post</Link>,
+                <Link to="/posts" key="posts">Posts</Link>,
                 <Link to="/" onClick={this.logOut} key="logout">Log Out</Link>
             ]
         } else {
             userLinks = [
+                <Link to="/register" key="register">Register</Link>,
                 <Link to="/login" key="login">Login</Link>
             ]
         }

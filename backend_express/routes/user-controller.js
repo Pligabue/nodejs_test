@@ -23,26 +23,22 @@ router.get("/logout", (req, res) => {
     res.send(req.isAuthenticated())
 })
 
-router.post("/user/new", async (req, res) => {
+router.post("/register", async (req, res) => {
     let { firstName, lastName, email, password } = req.body
     try {
         let salt = bcrypt.genSaltSync(10);
         let hash = bcrypt.hashSync(password, salt);
-        User.findOrCreate({
-            where: {email},
-            defaults: {firstName, lastName, email, hash}
-        })
-        users = await User.findAll({
-            attributes: ["firstName", "lastName", "email"],
-            include: [{
-                model: Post,
-                attributes: ["title", "content", "userId"]
-            }]
-        })
-        res.send({
-            message: "Success!",
-            users
-        })
+        User
+            .findOrCreate({
+                where: {email},
+                defaults: {firstName, lastName, email, hash}
+            })
+            .then(([user, created]) => {
+                if (created) 
+                    res.send({ message: "Registration succesful!" })
+                else
+                    res.status(409).send({ message: "E-mail already taken. Choose a different one." })
+            })
     } catch (error) {
         console.log(error);
         res.status(500).send({
