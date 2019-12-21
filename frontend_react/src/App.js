@@ -9,6 +9,7 @@ import PostForm from './components/forms/PostForm';
 import Axios from 'axios';
 import RegistrationForm from './components/forms/RegistrationForm';
 import PostList from './components/PostList';
+import About from './components/About';
 
 class App extends React.Component {
         
@@ -38,6 +39,7 @@ class App extends React.Component {
                     <Menu userId={this.state.userId} />
                 </div>
                 <div className="page-grid">
+                    <Route path="/about"><About /></Route>
                     <Route path="/register"><RegistrationForm /></Route>
                     <Route path="/login"><LoginForm /></Route>
                     <Route path="/post"><PostForm userId={this.state.userId} /></Route>

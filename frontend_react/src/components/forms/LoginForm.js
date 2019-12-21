@@ -19,7 +19,10 @@ export class LoginForm extends Component {
                 title="Log In"
                 fields={[
                     {title: "E-mail",   name: "email",   type: "email"},
-                    {title: "Password", name: "password", type: "password"}
+                    {title: "Password", name: "password", type: "password", validation: (value) => {
+                        if (value.length < 8)
+                            return "*Password must be at least 8 characters long"
+                    }}
                 ]}
                 url={this.url}
                 getData={this.getData}

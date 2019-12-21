@@ -1,0 +1,12 @@
+@import "variables.scss";
+
+.about {
+    h1 {
+        text-align: center;
+        padding: 1rem;
+        color: $primary-color;
+    }
+    p {
+        padding: 0.5rem;
+    }
+}

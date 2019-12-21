@@ -3,19 +3,6 @@ import axios from "axios";
 import Button from "react-bootstrap/Button"
 import '../../styles/Form.scss'
 
-function checkFields(state, fields) {
-    try {
-        for (let field of fields) {
-            if (!state[field.name]) {
-                return false;
-            }
-        }
-    } catch {
-        return false;
-    }
-    return true;
-}
-
 export class Form extends Component {
 
     constructor(props) {
@@ -27,8 +14,43 @@ export class Form extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
-            errorMessage: ""
+            errorMessages: ""
         }
+    }
+
+    removeMessage = () => {
+        this.setState({
+            errorMessages: ""
+        })
+    }
+
+    addMessage = (message) => {
+        this.setState({
+            errorMessages: message
+        })
+    }
+
+    checkFields = () => {
+        try {
+            for (let field of this.fields) {
+                if (!this.state[field.name] && !field.optional) {
+                    this.addMessage("*Fill all fields")
+                    return false;
+                } 
+                if (field.validation) {
+                    let message = field.validation(this.state[field.name])
+                    if (message) {
+                        this.addMessage(message)
+                        return false;
+                    }
+                }
+            }
+        } catch {
+            this.addMessage("*Something went wrong. Reload the page.")
+            return false;
+        }
+        this.removeMessage()
+        return true;
     }
     
     handleChange(e) {
@@ -39,12 +61,8 @@ export class Form extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        let validated = checkFields(this.state, this.fields)
-        if (!validated) {
-            this.setState({
-                errorMessage: "*Fill all fields"
-            })
-        } else {
+        let validated = this.checkFields()
+        if (validated) {
             let url = this.url
             let data = {}
             for (let field of this.fields) {
@@ -55,27 +73,23 @@ export class Form extends Component {
             }
             axios.post(url, data)
                 .then(response => {
-                    this.setState({
-                        errorMessage: ""
-                    })
+                    this.removeMessage()
                     this.getData(response.data)
                 })
                 .catch(error => {
                     console.log(error.response);
-                    if (error.response.data) {
-                        let { message } = error.response.data;
-                        if (message) 
-                            this.setState({
-                                errorMessage: "*" + message
-                            })
-                    } else 
-                        this.setState({
-                            errorMessage: "*Serverside error" 
-                    })
+
+                    let { message } = error.response.data;
+                    if (message)
+                        this.addMessage(message)
+                    else {
+                        let { statusText } = error.response;
+                        if (statusText)
+                            this.addMessage("*"+statusText)
+                        else
+                            this.addMessage("*Serverside error")
+                    }
                 })
-            this.setState({
-                errorMessage: ""
-            })
         }
     }
 
@@ -131,7 +145,7 @@ export class Form extends Component {
             <h1 className="form-title">{this.title}</h1>
             <form onSubmit={this.handleSubmit} className="form">
                 {forms}
-                <p className="form-error">{this.state.errorMessage}</p>
+                <p className="form-error">{this.state.errorMessages}</p>
                 <Button type="submit" block>Submit</Button>
             </form>
         </div>);
